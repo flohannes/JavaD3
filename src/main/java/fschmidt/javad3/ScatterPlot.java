@@ -12,12 +12,14 @@ public class ScatterPlot extends D3Plot {
     private final double[] y;
 
     public ScatterPlot(double[] x, double[] y) {
+        super(Version.V3);
         this.x = x;
         this.y = y;
     }
 
     @Override
-    protected String getJavascriptFile(String d3jsPath) {
+    protected String getJavascriptFile(String... d3jsPaths) {
+        String d3jsPath = d3jsPaths[0];
         return "<!DOCTYPE html>\n" + "<html>\n" + "  <head>\n" + "    <title>The d3 test</title>\n"
                 + "<style>\n" + ".chart {\n" + "\n" + "}\n" + "\n" + ".main text {\n" + "    font: 10px sans-serif;	\n" + "}\n" + "\n"
                 + ".axis line, .axis path {\n" + "    shape-rendering: crispEdges;\n" + "    stroke: black;\n" + "    fill: none;\n" + "}\n"

@@ -12,6 +12,7 @@ public class TimeseriesPlot extends D3Plot {
     private final double[] values;
 
     public TimeseriesPlot(double[] values, Date[] date) {
+        super(Version.V3);
         this.values = values;
         times = new long[date.length];
         for (int i = 0; i < date.length; i++) {
@@ -20,7 +21,8 @@ public class TimeseriesPlot extends D3Plot {
     }
 
     @Override
-    protected String getJavascriptFile(String d3jsPath) {
+    protected String getJavascriptFile(String... d3jsPaths) {
+        String d3jsPath = d3jsPaths[0];
         String dataString = "[";
         for (int i = 0; i < times.length; i++) {
             if (dataString.length() > 1) {

@@ -10,12 +10,13 @@ public class HistogramPlot extends D3Plot {
 
     private final double[] values;
     public HistogramPlot(double[] values){
+        super(Version.V3);
         this.values = values;
     }
     
     @Override
-    protected String getJavascriptFile(String d3jsPath) {
-        System.out.println(Arrays.toString(values));
+    protected String getJavascriptFile(String... d3jsPaths) {
+        String d3jsPath = d3jsPaths[0];
         String javascriptFile = "<!DOCTYPE html>\n" + "<html>\n" + "  <head>\n" + "    <title>The d3 test</title>\n"
                 + "    <script type='text/javascript' src='" + d3jsPath + "' charset=\"utf-8\"></script>\n"
                 + "  </head>\n" + "  <body>\n" + "<script>\n" + "\n" + "var color = \"steelblue\";\n" + "\n"
