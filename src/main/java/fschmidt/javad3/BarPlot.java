@@ -22,7 +22,7 @@ public class BarPlot extends D3Plot{
             if (dataString.length() > 1) {
                 dataString += ",";
             }
-            dataString += "{\"salesperson\":" + classes[i] + ",\"sales\":" + values[i] + "}";
+            dataString += "{\"salesperson\":\"" + classes[i] + "\",\"sales\":" + values[i] + "}";
         }
         dataString += "]";
         String javascriptFile ="<!DOCTYPE html>\n" +

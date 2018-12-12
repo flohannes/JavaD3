@@ -38,16 +38,6 @@ public class MultiTimeseriesPlot extends D3Plot {
                 dataString += "{\"date\":" + times[i]+",\"symbol\":\"" + dimNames[j] + "\",\"price\":" + values.get(j)[i]+"}";
             }
         }
-        for (int i = 0; i < times.length; i++) {
-            if (dataString.length() > 1) {
-                dataString += ",";
-            }
-            dataString += "{\"date\":" + times[i];
-            for (int j = 0; j < dimNames.length; j++) {
-                dataString += ",\"" + dimNames[j] + "\":" + values.get(j)[i];
-            }
-            dataString += "}";
-        }
         dataString += "]";
         String javascruptFile = "<!DOCTYPE html>\n" + "<meta charset=\"utf-8\">\n" + "<style> /* set the CSS */\n" + "\n"
                 + "body { font: 12px Arial;}\n" + "\n" + "path { \n" + "    stroke: steelblue;\n" + "    stroke-width: 2;\n"
