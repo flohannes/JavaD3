@@ -1,3 +1,4 @@
+package javad3;
 
 public abstract class Chart {
 	

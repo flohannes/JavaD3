@@ -1,3 +1,4 @@
+package javad3;
 
 public class Histogramm extends Chart {
 
