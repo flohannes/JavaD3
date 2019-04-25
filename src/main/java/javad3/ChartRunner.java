@@ -52,7 +52,7 @@ public class ChartRunner {
 		//System.out.println(c.getHtml());
 
 		WebDriverTools webDriverTools = new WebDriverTools();
-		webDriverTools.captureImage(chartId);
+		webDriverTools.captureImage(chartId, WIDTH, HEIGHT);
 		webDriverTools.terminate();
 		
 	}

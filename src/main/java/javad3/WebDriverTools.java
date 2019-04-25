@@ -6,6 +6,8 @@ import com.machinepublishers.jbrowserdriver.Timezone;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 /*
@@ -25,21 +27,41 @@ public class WebDriverTools {
     }
 
     /*
-    Method for capturing a screenshot and saving it to disk.
-    @param chartId: Id of generated chart.
+        Method for capturing a screenshot and saving it to disk.
+        @param chartId: Id of generated chart.
      */
-    public void captureImage(String chartId){
+    public void captureImage(String chartId, int width, int heigth){
         driver.get(URL+chartId);
         File outputFile = driver.getScreenshotAs(OutputType.FILE);
         try{
             FileUtils.copyFile(outputFile,new File(OUTPUT_PATH+chartId+".png"));
+            cropImage(OUTPUT_PATH+chartId+".png",width,heigth);
         }catch (IOException e){
             System.err.println("Error occurred during writing of image file.");
             e.printStackTrace();
         }
     }
     /*
-    Method for closure of WebDriver.
+         Method for cropping an Image. Returns a subimage of the given one.
+         @params : imagePath
+         @params : width
+         @params : height
+     */
+    public void cropImage(String imagePath,int width, int height){
+        BufferedImage bufferedImage;
+        try {
+            bufferedImage = ImageIO.read(new File(imagePath));
+            // X coordinate,Y coordinate, width, height
+            BufferedImage croppedImage = bufferedImage.getSubimage(0,0, width+70, height+70);
+            ImageIO.write(croppedImage, "png",new File(imagePath));
+        } catch (IOException e) {
+            System.err.println("Error when reading image with path: "+ imagePath);
+            e.printStackTrace();
+        }
+    }
+
+    /*
+        Method for closure of WebDriver.
      */
     public void terminate(){
         driver.quit();
