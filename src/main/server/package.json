@@ -1,0 +1,27 @@
+{
+  "name": "javad3",
+  "version": "1.0.0",
+  "description": "chart server",
+  "main": "index.js",
+  "bin": "index.js",
+  "author": "Florian Teich",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "d3": "^5.9.1",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4"
+  },
+  "pkg": {
+    "assets": [
+      "src/ejs/*",
+      "src/css/*",
+      "src/libs/*"
+    ],
+    "targets": [
+      "linux-node10",
+      "windows-node10",
+      "mac-node10"
+    ]
+  }
+}
