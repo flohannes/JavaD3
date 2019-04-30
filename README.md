@@ -1,6 +1,13 @@
 # JavaD3
 Making beautiful plots from Java using D3js.
 
+## Prerequisites
+
+1. After downloading / cloning the project run the following command in the server' s root directory to get all required dependencies:
+<code>
+npm install
+</code>
+
 ## Usage
 
 ### Example Histogram Plot
@@ -61,3 +68,8 @@ pkg . --out-path ../client/javad3/bin
 
 ### Step 6
 Now you should be able to use your diagram in in JavaD3 ;)
+
+## Troubleshooting
+
+### Error: eclipse selection does not contain a main type
+Remove all unneeded sources from the build path and add the project's client folder as the only build path.
