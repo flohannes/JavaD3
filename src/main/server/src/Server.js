@@ -35,6 +35,11 @@ class Server {
         Object.keys(PostRequestListener).forEach( path => { this.server.post(path, PostRequestListener[path]) })
         Object.keys(PutRequestListener).forEach( path => { this.server.put(path, PutRequestListener[path]) })
         Object.keys(DeleteRequestListener).forEach( path => { this.server.delete(path, DeleteRequestListener[path]) })
+
+		//Branch specific listener: example svg for animation testing 
+		this.server.get("/", (req, res) => {
+			res.render(path.join(CONSTANTS.EJS_DIR, "swarm.ejs")) 
+		})
     }
     
     start() {

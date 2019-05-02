@@ -50,7 +50,7 @@ public class ChartRunner {
 		//get html from chart
 		System.out.println(c.getHtml());
 		
-		
+	
 		
 	}
 

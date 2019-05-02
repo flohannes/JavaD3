@@ -7,7 +7,7 @@ if (process.argv.length == 3) {
     
     //check for valid port number
     if (!isNaN(port) && 0 < port && port < 65536) {
-        const server = new Server(8000)
+        const server = new Server(port)
         server.start()
     }
     
