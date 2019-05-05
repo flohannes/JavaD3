@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Animation</title>
+
+  </head>
+  <body>
+
+   <iframe id="animation-container" onload="this.style.visibility = 'visible'" style="visibility:hidden; width:600px; height: 600px" scrolling="no" frameborder="0"> </iframe>
+
+    
+    <script>
+    	var chartId = <%- chartId %>
+    	var frameCount = <%- frameCount %>
+    	var frame = document.getElementById("animation-container")
+    	
+    	var pointer = 0
+    
+    	animate()
+    	
+    	function animate() {
+    	
+    		if (pointer < frameCount -1) {
+    			showFrame(pointer + 1)
+    			pointer += 1
+    			setTimeout(animate, 1000)
+    		}
+    	}
+
+      function showFrame(pId) {
+      
+      	frame.src = "http://localhost:8000/"  + chartId + "?frame=" + pId
+      
+      }
+
+    </script>
+
+
+  </body>
+</html>

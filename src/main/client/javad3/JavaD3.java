@@ -14,6 +14,7 @@ public class JavaD3 {
 	public static final String OPTION_TITLE = "title";
 	public static final String OPTION_EJS_SCRIPT = "ejs";
 	public static final String OPTION_DATA = "data";
+	public static final String OPTION_ADD_FRAME = "addframe";
 
 	private static String serverIp;
 	private static Integer serverPort;

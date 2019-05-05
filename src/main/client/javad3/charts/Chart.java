@@ -36,4 +36,8 @@ public abstract class Chart {
 		JavaD3.setOption(id, JavaD3.OPTION_TITLE, pTitle);
 	}
 	
+	public void addFrame() {
+		JavaD3.setOption(id, JavaD3.OPTION_ADD_FRAME, "1");
+	}
+	
 }
