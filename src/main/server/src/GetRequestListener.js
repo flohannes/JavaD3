@@ -15,7 +15,7 @@ function getChartById(req, res) {
         res.render(path.join(CONSTANTS.EJS_DIR, chart.ejs)) 
     }
     else {
-        res.status(400).send("Chart not found!")
+        res.status(404).send("Chart not found!")
     }
 }
 

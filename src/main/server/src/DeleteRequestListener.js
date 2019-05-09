@@ -9,7 +9,7 @@ function deleteChartById(req, res) {
         res.send("Chart deleted!")
     }
     else {
-        res.status(400).send("Chart not found!")
+        res.status(404).send("Chart not found!")
     }
 }
 

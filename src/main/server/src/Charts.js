@@ -105,10 +105,10 @@ class BarChart extends Chart {
     }
 }
 
-class TimeSerie extends Chart {
+class TimeSeries extends Chart {
     
     constructor() {
-        super("timeserie.ejs")
+        super("timeseries.ejs")
     }
     
     addData(pDate, pValue) {
@@ -131,5 +131,5 @@ class TimeSerie extends Chart {
 module.exports = {
     "histogram.ejs" : Histogram,
     "barchart.ejs" : BarChart,
-    "timeserie.ejs" : TimeSerie
+    "timeseries.ejs" : TimeSeries
 }

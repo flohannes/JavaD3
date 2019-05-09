@@ -1,2 +1,5 @@
 /target/
 /src/main/server/node_modules/
+.classpath
+.project
+.settings
