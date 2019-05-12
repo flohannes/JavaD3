@@ -52,9 +52,11 @@ public class ChartRunner {
 		
 		//get html from chart
 		System.out.println(c.getHtml());
-		
-		
-		
+		WebDriverTools tools = new WebDriverTools();
+		tools.captureGIF(c.getId(),500,500,10,500,true);
+
+
+
 	}
 
 }

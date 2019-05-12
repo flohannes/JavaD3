@@ -1,6 +1,6 @@
 package javad3.charts;
 
-import javad3.JavaD3;
+import javad3.*;
 
 public class BarChart extends Chart {
 	
