@@ -128,8 +128,32 @@ class TimeSerie extends Chart {
     }
 }
 
+class Clustering extends Chart {
+    
+    constructor() {
+        super("clustering.ejs")
+    }
+    
+    addData(pDate, pValue) {
+        if (pDate == undefined || pValue == undefined) return
+        
+        let d = Number(pDate)
+        let v = Number(pValue)
+        if (!isNaN(d) && !isNaN(v)) {
+            this.data.push({"date" : d,
+                            "value" : v})
+        }
+    }
+    
+    applyOptions(pReq) {
+        super.applyOptions(pReq)
+        this.addData(pReq.headers.date, pReq.headers.value)
+    }
+}
+
 module.exports = {
     "histogram.ejs" : Histogram,
     "barchart.ejs" : BarChart,
-    "timeserie.ejs" : TimeSerie
+    "timeserie.ejs" : TimeSerie,
+    "clustering.ejs" : Clustering
 }

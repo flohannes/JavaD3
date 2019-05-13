@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class JavaD3 {
 	
-	public static final String SERVER_BINARY_FOLDER = "./src/main/client/javad3/bin/";
+	public static final String SERVER_BINARY_FOLDER = "C:\\Users\\Laura\\Documents\\Uni\\JavaD3\\src\\main\\client\\javad3\\bin/";
 	
 	public static final String OPTION_WIDTH = "width";
 	public static final String OPTION_HEIGHT = "height";
