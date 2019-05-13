@@ -60,20 +60,20 @@ public class ChartRunner {
             br = new BufferedReader(new FileReader(csvFile));
             int count = 0;
             while ((line = br.readLine()) != null) {
-            	if(count == 21) {
-            		break;
-            	}
+//            	if(count == 21) {
+//            		break;
+//            	}
                 // use comma as separator
                 String[] data = line.split(cvsSplitBy);
                 float value = 0;
                 try{
-                    value = Float.valueOf(data[2]); 
+                    value = Float.valueOf(data[3]); 
                  
                 }catch(NumberFormatException ex){
-                    System.err.print(data[2]);
+                    System.err.print(data[3]);
                 }  
                 count ++;
-                c.addData(Integer.toString(count), value);
+                c.addData(data[2], value);
             }
 
         } catch (FileNotFoundException e) {
