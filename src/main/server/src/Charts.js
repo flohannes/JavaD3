@@ -8,6 +8,7 @@ class Chart {
         this.height = 500
         this.width = 500
         this.title = "Default Title"
+		this.frames = [[]]
         this.data = []
     }
     
@@ -35,11 +36,23 @@ class Chart {
         this.title = String(pTitle)
     }
     
-    applyOptions(pReq) {
+    applyOptions(pReq) {	
+		this.addFrame(pReq.headers.addframe)
         this.setHeight(pReq.headers.height)
         this.setWidth(pReq.headers.width)
         this.setTitle(pReq.headers.title)
     }
+
+	addFrame(pFrame) {
+		if (pFrame != undefined) {
+			this.frames.push([])
+		}
+	}
+
+	addData(pData) {
+		this.frames[this.frames.length - 1].push(pData)
+	}
+	
 }
 
 class Histogram extends Chart {
@@ -69,7 +82,7 @@ class Histogram extends Chart {
             
         }
         else if (!isNaN(Number(pData))) {
-            this.data.push(Number(pData))
+            super.addData(Number(pData))
         }
         
     }
@@ -93,7 +106,7 @@ class BarChart extends Chart {
         
         let v = Number(pValue)
         if (!isNaN(v)) {
-            this.data.push({"key" : pKey,
+            super.addData({"key" : pKey,
                             "value" : v})
         }
         
@@ -117,7 +130,7 @@ class TimeSerie extends Chart {
         let d = Number(pDate)
         let v = Number(pValue)
         if (!isNaN(d) && !isNaN(v)) {
-            this.data.push({"date" : d,
+            super.addData({"date" : d,
                             "value" : v})
         }
     }

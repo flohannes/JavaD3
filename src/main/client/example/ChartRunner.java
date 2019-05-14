@@ -27,8 +27,8 @@ public class ChartRunner {
 		
 		
 		//try different chart types
-//		Histogram c = new Histogram();
-//		BarChart c = new BarChart();
+		//Histogram c = new Histogram();
+		//BarChart c = new BarChart();
 		//TimeSerie c = new TimeSerie();
 		Clustering c = new Clustering();
 		
@@ -41,14 +41,18 @@ public class ChartRunner {
 		
 //		//generate random data
 //		Random r = new Random();
-//		for (int i=0; i < 20; i++) {
+//		for (int i=0; i < 200; i++) {
 //			
+//			if (i % 20 == 0 && i != 0) {
+//				c.addFrame();
+//			}
 //			//add data for histogram
-////			c.addData((double) r.nextInt() % 200);
+//			//c.addData((double) r.nextInt() % 200);
 //			
 //			//add data for barchart or timeserie
 //			c.addData(Integer.toString(i), (double) Math.abs(r.nextInt() % 100));
 //		}
+
 		
 		String csvFile = "C:\\Users\\Laura\\Documents\\Uni\\JavaD3\\src\\main\\client\\example\\Data\\pollutionData-0.csv";
         BufferedReader br = null;
@@ -93,8 +97,8 @@ public class ChartRunner {
 		
 		//get html from chart
 		//System.out.println(c.getHtml());
-		
-		
+        WebDriverTools tools = new WebDriverTools();
+		tools.captureGIF(c.getId(),500,500,10,500,true);
 		
 	}
 

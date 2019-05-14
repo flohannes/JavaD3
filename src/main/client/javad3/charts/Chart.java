@@ -1,6 +1,6 @@
 package javad3.charts;
 
-import javad3.JavaD3;
+import javad3.*;
 
 public abstract class Chart {
 	
@@ -34,6 +34,10 @@ public abstract class Chart {
 	
 	public void setTitle(String pTitle) {
 		JavaD3.setOption(id, JavaD3.OPTION_TITLE, pTitle);
+	}
+	
+	public void addFrame() {
+		JavaD3.setOption(id, JavaD3.OPTION_ADD_FRAME, "1");
 	}
 	
 }

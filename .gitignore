@@ -1,2 +1,4 @@
 /target/
+/.idea/
+/JavaD3.iml
 /src/main/server/node_modules/
