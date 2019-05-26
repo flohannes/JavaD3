@@ -19,7 +19,7 @@ import java.io.IOException;
 public class WebDriverTools {
     private JBrowserDriver driver;
     //Path where the images/animations are to be saved.
-    private final String OUTPUT_PATH = "C:\\Users\\marti\\Documents\\d3plots\\";
+    private final String OUTPUT_PATH = "C:\\Users\\Laura\\Documents\\Uni\\d3_plots\\plot";
 
     //Base URL of server, which creates the SVGs.
     private final String URL = "http://localhost:8000/";

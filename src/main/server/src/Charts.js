@@ -10,6 +10,10 @@ class Chart {
         this.title = "Default Title"
 		this.frames = [[]]
         this.data = []
+        this.maxdate = 0
+        this.mindate = 0
+        this.maxval = 0
+        this.minval = 0
     }
     
     setHeight(pHeight) {
@@ -126,7 +130,6 @@ class TimeSerie extends Chart {
     
     addData(pDate, pValue) {
         if (pDate == undefined || pValue == undefined) return
-        
         let d = Number(pDate)
         let v = Number(pValue)
         if (!isNaN(d) && !isNaN(v)) {
@@ -149,11 +152,10 @@ class Clustering extends Chart {
     
     addData(pDate, pValue) {
         if (pDate == undefined || pValue == undefined) return
-        
         let d = Number(pDate)
         let v = Number(pValue)
         if (!isNaN(d) && !isNaN(v)) {
-            this.data.push({"date" : d,
+            super.addData({"date" : d,
                             "value" : v})
         }
     }

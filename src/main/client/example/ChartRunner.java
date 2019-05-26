@@ -1,6 +1,6 @@
 package example;
 
-import java.util.Random;
+//import java.util.Random;
 
 import javad3.*;
 import javad3.charts.*;
@@ -58,28 +58,28 @@ public class ChartRunner {
         BufferedReader br = null;
         String line = "";
         String cvsSplitBy = ",";
-
+        
         try {
 
             br = new BufferedReader(new FileReader(csvFile));
             int count = 0;
+   
             while ((line = br.readLine()) != null) {
-//            	if(count == 21) {
-//            		break;
-//            	}
-                // use comma as separator
+            	if(count==400) break;
+            	if (count % 10 == 0 && count != 0) {
+    				c.addFrame();
+    			}
                 String[] data = line.split(cvsSplitBy);
-                float value = 0;
+                double value = 0;
                 try{
-                    value = Float.valueOf(data[3]); 
-                 
+                    value = Double.valueOf(data[3]); 
                 }catch(NumberFormatException ex){
                     System.err.print(data[3]);
                 }  
-                count ++;
                 c.addData(data[2], value);
+                count ++;
             }
-
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -98,7 +98,7 @@ public class ChartRunner {
 		//get html from chart
 		//System.out.println(c.getHtml());
         WebDriverTools tools = new WebDriverTools();
-		tools.captureGIF(c.getId(),500,500,10,500,true);
+		tools.captureGIF(c.getId(),500,500,40,250,true);
 		
 	}
 

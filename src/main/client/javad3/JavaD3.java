@@ -134,7 +134,7 @@ public class JavaD3 {
 	}
 
 	public static Boolean setOptions(int pId, String[] pOptions, String[] pValues) {
-		
+
 		try {
 			
 			if (pOptions.length != pValues.length) return false;
