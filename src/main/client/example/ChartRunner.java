@@ -8,7 +8,7 @@ import javad3.renderer.node.NodeRenderer;
 
 public class ChartRunner {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// server runs on port 8000 and debug messages are turned on
 		LocalNodeServer.setDebugMode(true);
 		LocalNodeServer.start(8000);
@@ -27,24 +27,34 @@ public class ChartRunner {
 		// try different chart types
 		// Histogram histogram = nodeRenderer.createHistogramChart();
 		// BarChart c = nodeRenderer.createBarChart();
-		TimeSeries c = nodeRenderer.createTimeSeries();
+		TimeSeries timeseries = nodeRenderer.createTimeSeries();
 
-		System.out.println("You can find your chart at: " + c.getLocation());
+		System.out.println("You can find your chart at: " + timeseries.getLocation());
 
 		// set chart parameters
-		c.setTitle("Mein Test Titel");
-		c.setHeight(500);
-		c.setWidth(500);
+		timeseries.setTitle("Mein Test Titel");
+		timeseries.setHeight(900);
+		timeseries.setWidth(1600);
+		timeseries.setDataRefreshInterval(500);
+		timeseries.setVisibleDatapointsLimit(30);
 
 		// generate random data
 		Random r = new Random();
 		for (int i = 0; i < 20; i++) {
 
 			// add data for histogram
-			// c.addData((double) r.nextInt() % 200);
+			// histogram.addData((double) r.nextInt() % 200);
 
 			// add data for barchart or timeseries
-			c.addData(Integer.toString(i), (double) Math.abs(r.nextInt() % 100));
+			timeseries.addData(Integer.toString(i), (double) Math.abs(r.nextInt() % 100));
+		}
+		
+		// keep adding data
+		int i = 20;
+		while (true) {
+			Thread.sleep(500);
+			timeseries.addData(Integer.toString(i), (double) Math.abs(r.nextInt() % 100));
+			i++;
 		}
 
 		// get html from chart

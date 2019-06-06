@@ -26,10 +26,10 @@ class ChartDatabase {
         this.charts = {}
     }
     
-    create(pEjs) {
+    create(pEjs, host) {
         if (!(Object.keys(Charts).includes(pEjs))) return -1
         
-        this.charts[this.current_next_id] = new Charts[pEjs]
+        this.charts[this.current_next_id] = new Charts[pEjs](this.current_next_id, host)
         this.current_next_id += 1
         return this.current_next_id - 1
     }

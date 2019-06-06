@@ -1,6 +1,6 @@
 class Chart {
     
-    constructor(pEjs) {
+    constructor(pEjs, id, host) {
         //save ejs file
         this.ejs = pEjs
         
@@ -9,6 +9,11 @@ class Chart {
         this.width = 500
         this.title = "Default Title"
         this.data = []
+        this.dataRefreshInterval;
+        this.visibleDatapointsLimit;
+
+        this.id = id;
+        this.host = host;
     }
     
     setHeight(pHeight) {
@@ -34,11 +39,39 @@ class Chart {
         
         this.title = String(pTitle)
     }
+
+    setDataRefreshInterval(dataRefreshInterval) {
+        if (!dataRefreshInterval) {
+            return;
+        }
+        
+        let d = Number(dataRefreshInterval);
+
+        if (!isNaN(d) && d > 0) {
+            this.dataRefreshInterval = d
+        }
+
+        this.dataRefreshInterval = dataRefreshInterval;
+    }
+
+    setVisibleDatapointsLimit(visibleDatapointsLimit) {
+        if (!visibleDatapointsLimit) {
+            return;
+        }
+
+        let d = Number(visibleDatapointsLimit);
+
+        if (!isNaN(d) && d > 0) {
+            this.visibleDatapointsLimit = visibleDatapointsLimit;
+        }
+    }
     
     applyOptions(pReq) {
         this.setHeight(pReq.headers.height)
         this.setWidth(pReq.headers.width)
         this.setTitle(pReq.headers.title)
+        this.setDataRefreshInterval(pReq.headers.datarefreshinterval)
+        this.setVisibleDatapointsLimit(pReq.headers.visibledatapointslimit)
     }
 }
 
@@ -107,8 +140,8 @@ class BarChart extends Chart {
 
 class TimeSeries extends Chart {
     
-    constructor() {
-        super("timeseries.ejs")
+    constructor(id, host) {
+        super("timeseries.ejs", id, host)
     }
     
     addData(pDate, pValue) {

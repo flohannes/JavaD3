@@ -11,4 +11,8 @@ public interface D3Object {
 	public String getHtml();
 	
 	public String getLocation();
+	
+	public void setDataRefreshInterval(long millis);
+	
+	public void setVisibleDatapointsLimit(int limit);
 }

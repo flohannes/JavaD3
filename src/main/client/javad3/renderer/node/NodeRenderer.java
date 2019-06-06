@@ -54,7 +54,7 @@ public class NodeRenderer {
 
 	private int createChart(String chartType) {
 		try {
-			return  this.sendChartToServer(chartType);
+			return this.sendChartToServer(chartType);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;

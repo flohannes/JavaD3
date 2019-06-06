@@ -7,6 +7,8 @@ abstract class D3ObjectImpl implements D3Object{
 	private static final String OPTION_WIDTH = "width";
 	private static final String OPTION_HEIGHT = "height";
 	private static final String OPTION_TITLE = "title";
+	private static final String OPTION_DATA_REFRESH_INTERVAL = "datarefreshinterval";
+	private static final String OPTION_VISIBLE_DATAPOINTS_LIMIT = "visibledatapointslimit";
 	
 	int id;
 	NodeRenderer nodeRenderer;
@@ -39,6 +41,16 @@ abstract class D3ObjectImpl implements D3Object{
 	@Override
 	public String getLocation() {
 		return this.nodeRenderer.getURLForChartId(this.id);
+	}
+	
+	@Override
+	public void setDataRefreshInterval(long millis) {
+		this.nodeRenderer.setOption(this.id, OPTION_DATA_REFRESH_INTERVAL, Long.toString(millis));
+	}
+	
+	@Override
+	public void setVisibleDatapointsLimit(int limit) {
+		this.nodeRenderer.setOption(this.id, OPTION_VISIBLE_DATAPOINTS_LIMIT, Integer.toString(limit));
 	}
 	
 }

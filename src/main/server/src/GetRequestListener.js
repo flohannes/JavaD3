@@ -19,6 +19,20 @@ function getChartById(req, res) {
     }
 }
 
+function getChartDataById(req, res) {
+    let chart = DB.get(req.params.clientId);
+
+    if (chart === null) {
+        res.status(404).send("Chart not found!");
+        return;
+    }
+
+    //passToClient(res, "chart", chart);
+    res.json(chart);
+
+}
+
 module.exports = {
-    "/:clientId" : getChartById
+    "/:clientId" : getChartById,
+    "/charts/:clientId": getChartDataById
 }

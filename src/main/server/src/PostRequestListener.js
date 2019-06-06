@@ -3,7 +3,7 @@ const DB = new ChartDatabase()
 
 function createNewChart(req, res) {
     
-    let chartId = DB.create(req.headers.ejs)
+    let chartId = DB.create(req.headers.ejs, req.headers.host)
     
     if (chartId == -1) {
         res.status(404).send("EJS not given")
