@@ -1,5 +1,7 @@
 /target/
 /src/main/server/node_modules/
+/aggregation-mechanism/node_modules/
+/aggregation-mechanism/.idea/
 .classpath
 .project
 .settings
