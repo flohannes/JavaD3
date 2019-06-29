@@ -8,6 +8,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChartRunner {
 	
@@ -54,29 +56,47 @@ public class ChartRunner {
 //		}
 
 		
-		String csvFile = "C:\\Users\\Laura\\Documents\\Uni\\JavaD3\\src\\main\\client\\example\\Data\\pollutionData-0.csv";
-        BufferedReader br = null;
-        String line = "";
-        String cvsSplitBy = ",";
+		String datapoints = "C:\\Users\\Laura\\Documents\\Uni\\JavaD3\\src\\main\\client\\example\\Data\\pollutionData-0.csv";
+		String cluster = "C:\\Users\\Laura\\Documents\\Uni\\JavaD3\\src\\main\\client\\example\\Data\\pollutionData-cabirch-result-0.csv";
+        BufferedReader br_data = null;
+        BufferedReader br_cluster = null;
+        String data_line = "";
+        String cluster_line = "";
+        String csvSplitBy = ",";
+        
         
         try {
 
-            br = new BufferedReader(new FileReader(csvFile));
+            br_data = new BufferedReader(new FileReader(datapoints));
+            br_cluster = new BufferedReader(new FileReader(cluster));
             int count = 0;
    
-            while ((line = br.readLine()) != null) {
-            	if(count==400) break;
-            	if (count % 10 == 0 && count != 0) {
-    				c.addFrame();
-    			}
-                String[] data = line.split(cvsSplitBy);
-                double value = 0;
-                try{
-                    value = Double.valueOf(data[3]); 
-                }catch(NumberFormatException ex){
-                    System.err.print(data[3]);
-                }  
-                c.addData(data[2], value);
+            ArrayList<String[]> current_data = new ArrayList<>();
+            ArrayList<String[]> current_cluster = new ArrayList<>();
+            
+            
+            // idee: map erstellen mit Datum als key 
+            while ((data_line = br_data.readLine()) != null ) {
+            	// && (cluster_line = br_cluster.readLine()) != null
+            	if(count==200) break;
+           
+//            	String[] cluster_data = cluster_line.split(csvSplitBy);
+                String[] data = data_line.split(csvSplitBy);
+                
+//                if(cluster_data[0].equals(data[0])) {
+//            		br_data.mark(1000);
+//            		current_cluster.add(cluster_data);
+//                }else {
+//                	br_data.reset();
+                	if(current_data.size() >= 30) {
+                    	current_data.remove(0);
+                	}
+                    current_data.add(data);
+                    c.addFrame();
+                    c.addData(current_data, current_cluster);
+//                    c.addCluster(cluster_data[2], cluster_data[3], cluster_data[1]);
+
+//                }
                 count ++;
             }
             
@@ -85,9 +105,9 @@ public class ChartRunner {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (br != null) {
+            if (br_data != null) {
                 try {
-                    br.close();
+                    br_data.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -98,7 +118,7 @@ public class ChartRunner {
 		//get html from chart
 		//System.out.println(c.getHtml());
         WebDriverTools tools = new WebDriverTools();
-		tools.captureGIF(c.getId(),500,500,40,250,true);
+		tools.captureGIF(c.getId(),500,500,200,500,true);
 		
 	}
 

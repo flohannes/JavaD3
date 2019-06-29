@@ -63,10 +63,8 @@ public class JavaD3 {
 		
 		if (serverProcess != null) {
 			serverProcess.destroy();
-			if (debugMode) System.out.println("Chart server finished");
-			
-		}
-		
+			if (debugMode) System.out.println("Chart server finished");	
+		}	
 	}
 
 	
