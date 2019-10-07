@@ -2,4 +2,5 @@
 .classpath
 .project
 .settings
-/video/
+/video/frames/
+/**/*.mp4
