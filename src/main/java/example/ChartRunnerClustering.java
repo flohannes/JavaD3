@@ -129,21 +129,9 @@ public class ChartRunnerClustering {
                 }
             }
         }
-//
-//		VideoCreator vc = new VideoCreator(clusteringVideo);
-//		
-//		vc.createVideo();
+
+		VideoCreator vc = new VideoCreator(clusteringVideo);
+		
+		vc.createVideo();
 	}
-	
-    
-//    public static ArrayList<ArrayList<ClusteringData>> readMap(HashMap<String, ArrayList<ClusteringData>> mp) {
-//    	ArrayList<ArrayList<ClusteringData>> all_cluster = new ArrayList<ArrayList<ClusteringData>>();
-//        Iterator it = mp.entrySet().iterator();
-//        while (it.hasNext()) {
-//            HashMap.Entry pair = (HashMap.Entry)it.next();
-//            all_cluster.add((ArrayList<ClusteringData>) pair.getValue());;
-//            it.remove(); // avoids a ConcurrentModificationException
-//        }
-//        return all_cluster;
-//    }
 }
