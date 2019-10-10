@@ -1,5 +1,6 @@
 package javad3.d3objects;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface ClusteringVideo extends D3Object {
@@ -32,10 +33,8 @@ public interface ClusteringVideo extends D3Object {
 		}
 	}
 	
-	public void addData(List<ClusteringData> data);
-	
-	public void addCluster(List<ClusteringData> cluster);
-	
+	public void addData(List<ClusteringData> data, ArrayList<ArrayList<ClusteringData>> cluster);
+		
 	public void setDataRefreshInterval(long millis);
 	
 	public void setMaxX(int maxX);
