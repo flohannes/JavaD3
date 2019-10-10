@@ -41,6 +41,12 @@ public class VisuEngineRenderer implements Renderer {
 		return new TimeSeriesImpl(chartId, this);
 	}
 	
+	public ClusteringVideo createClusteringVideo() {
+		int chartId = this.createChart();
+		
+		return new ClusteringVideoImpl(chartId, this);
+	}
+	
 	String getURLForChartIdUnitAndTemplate(int chartId, String unit, String template) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://").append(serverHost).append(":").append(serverPort)
