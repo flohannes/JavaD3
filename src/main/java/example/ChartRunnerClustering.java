@@ -27,8 +27,8 @@ public class ChartRunnerClustering {
 		clusteringVideo.setTitle("Mein Test Titel");
 		clusteringVideo.setHeight(768);
 		clusteringVideo.setWidth(1024);
-		clusteringVideo.setDataRefreshInterval(1000);
-		//timeseries.setVisibleDatapointsLimit(10);
+		clusteringVideo.setDataRefreshInterval(400);
+		clusteringVideo.setVisibleDatapointsLimit(20);
 		
 		String datapoints = "C:\\Users\\Laura\\Documents\\Uni\\Bachelorarbeit\\Data\\testData49.csv";
 		String cluster = "C:\\Users\\Laura\\Documents\\Uni\\Bachelorarbeit\\Data\\testCluster49.csv";
@@ -114,7 +114,7 @@ public class ChartRunnerClustering {
     		clusteringVideo.setMaxY(Math.round(max_height)+10);
     		clusteringVideo.setMinX(Math.round(min_width)-10);
     		clusteringVideo.setMinY(Math.round(min_height)-10);
-            clusteringVideo.addData(all_datapoints, readMap(cluster_map));
+            clusteringVideo.addData(all_datapoints, cluster_map);
             
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -136,14 +136,14 @@ public class ChartRunnerClustering {
 	}
 	
     
-    public static ArrayList<ArrayList<ClusteringData>> readMap(HashMap<String, ArrayList<ClusteringData>> mp) {
-    	ArrayList<ArrayList<ClusteringData>> all_cluster = new ArrayList<ArrayList<ClusteringData>>();
-        Iterator it = mp.entrySet().iterator();
-        while (it.hasNext()) {
-            HashMap.Entry pair = (HashMap.Entry)it.next();
-            all_cluster.add((ArrayList<ClusteringData>) pair.getValue());;
-            it.remove(); // avoids a ConcurrentModificationException
-        }
-        return all_cluster;
-    }
+//    public static ArrayList<ArrayList<ClusteringData>> readMap(HashMap<String, ArrayList<ClusteringData>> mp) {
+//    	ArrayList<ArrayList<ClusteringData>> all_cluster = new ArrayList<ArrayList<ClusteringData>>();
+//        Iterator it = mp.entrySet().iterator();
+//        while (it.hasNext()) {
+//            HashMap.Entry pair = (HashMap.Entry)it.next();
+//            all_cluster.add((ArrayList<ClusteringData>) pair.getValue());;
+//            it.remove(); // avoids a ConcurrentModificationException
+//        }
+//        return all_cluster;
+//    }
 }

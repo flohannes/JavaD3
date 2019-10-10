@@ -1,7 +1,10 @@
 package javad3.d3objects;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import javad3.d3objects.ClusteringVideo.ClusteringData;
 
 public interface ClusteringVideo extends D3Object {
 	
@@ -33,7 +36,7 @@ public interface ClusteringVideo extends D3Object {
 		}
 	}
 	
-	public void addData(List<ClusteringData> data, ArrayList<ArrayList<ClusteringData>> cluster);
+	public void addData(List<ClusteringData> data, HashMap<String, ArrayList<ClusteringData>> cluster_map);
 		
 	public void setDataRefreshInterval(long millis);
 	

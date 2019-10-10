@@ -1,11 +1,15 @@
 package javad3.renderer.visuengine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
 
 import javad3.d3objects.ClusteringVideo;
 import javad3.d3objects.ClusteringVideo.ClusteringData;
@@ -30,26 +34,50 @@ class ClusteringVideoImpl extends D3ObjectImpl implements ClusteringVideo {
 	}
 	
 	@Override
-	public void addData(List<ClusteringData> data, ArrayList<ArrayList<ClusteringData>> cluster) {
+	public void addData(List<ClusteringData> data, HashMap<String, ArrayList<ClusteringData>> cluster_map) {
 		JsonArrayBuilder jsonPointsArray = Json.createArrayBuilder();
-		JsonArrayBuilder jsonOverallClusterArray = Json.createArrayBuilder();
+		JsonObjectBuilder jsonOverallCluster = Json.createObjectBuilder();
 		JsonArrayBuilder jsonClusterArray = Json.createArrayBuilder();
-
+			
+		/*
+		 * write the datapoints into a json object
+		 */
 		for(ClusteringData entry : data) {
 			jsonPointsArray = jsonPointsArray.add(Json.createObjectBuilder().add(OPTION_DATA_ENTRY_X, Float.toString(entry.getX())).add(OPTION_DATA_ENTRY_Y, Float.toString(entry.getY())).add(OPTION_DATA_ENTRY_RADIUS, Float.toString(entry.getRadius())).add(OPTION_DATA_ENTRY_TIMESTAMP, entry.getTimeStamp()));
 		}
 		
-		for(ArrayList<ClusteringData> timeStamp : cluster) {
-			for(ClusteringData entry : timeStamp) {
+		/*
+		 * write the cluster in a json object
+		 */
+		Iterator<Entry<String, ArrayList<ClusteringData>>> it = cluster_map.entrySet().iterator();
+		while(it.hasNext()) {
+			
+            HashMap.Entry pair = (HashMap.Entry)it.next();
+            ArrayList<ClusteringData> cluster = (ArrayList<ClusteringData>) pair.getValue();
+            
+            /*
+             * add every element for one timestamp into an json array
+             */
+			for(ClusteringData entry : cluster) {
 				jsonClusterArray = jsonClusterArray.add(Json.createObjectBuilder().add(OPTION_DATA_ENTRY_X, Float.toString(entry.getX())).add(OPTION_DATA_ENTRY_Y, Float.toString(entry.getY())).add(OPTION_DATA_ENTRY_RADIUS, Float.toString(entry.getRadius())).add(OPTION_DATA_ENTRY_TIMESTAMP, entry.getTimeStamp()));
 			}
-			jsonOverallClusterArray = jsonOverallClusterArray.add(jsonClusterArray);
+
+			/*
+			 * write the json array to the timestamp key into an json object
+			 */
+			jsonOverallCluster = jsonOverallCluster.add((String) pair.getKey(), jsonClusterArray);
 			jsonClusterArray = Json.createArrayBuilder();
 		}
 		
-		JsonObject concat_data = Json.createObjectBuilder().add(OPTION_POINTS_KEY, jsonPointsArray).add(OPTION_CLUSTER_KEY, jsonOverallClusterArray).build();
-		
+		/*
+		 * concat datapoints and cluster into one json object
+		 */
+		JsonObject concat_data = Json.createObjectBuilder().add(OPTION_POINTS_KEY, jsonPointsArray).add(OPTION_CLUSTER_KEY, jsonOverallCluster).build();
 		String json = Json.createObjectBuilder().add(OPTION_DATA_KEY, concat_data).build().toString();
+
+		/*
+		 * send data to visuengine
+		 */
 		this.visuEngineRenderer.sendData(this.id, json);
 	}
 	
