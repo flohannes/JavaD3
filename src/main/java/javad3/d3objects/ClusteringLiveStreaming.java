@@ -1,10 +1,8 @@
 package javad3.d3objects;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
-public interface ClusteringVideo extends D3Object {
+public interface ClusteringLiveStreaming extends D3Object {
 	
 	public static class ClusteringData {
 		String timeStamp;
@@ -34,7 +32,7 @@ public interface ClusteringVideo extends D3Object {
 		}
 	}
 	
-	public void addData(List<ClusteringData> data, HashMap<String, ArrayList<ClusteringData>> cluster_map);
+	public void addData(ClusteringData data, ArrayList<ClusteringData> cluster_map, String timeStamp);
 		
 	public void setDataRefreshInterval(long millis);
 	

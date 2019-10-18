@@ -47,6 +47,12 @@ public class VisuEngineRenderer implements Renderer {
 		return new ClusteringVideoImpl(chartId, this);
 	}
 	
+	public ClusteringLiveStreaming createClusteringLiveStreaming() {
+		int chartId = this.createChart();
+		
+		return new ClusteringLiveStreamingImpl(chartId, this);
+	}
+	
 	String getURLForChartIdUnitAndTemplate(int chartId, String unit, String template) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://").append(serverHost).append(":").append(serverPort)

@@ -1,10 +1,8 @@
 package example;
 
 import javad3.d3objects.*;
-import javad3.d3objects.ClusteringVideo.ClusteringData;
+import javad3.d3objects.ClusteringLiveStreaming.ClusteringData;
 import javad3.renderer.visuengine.VisuEngineRenderer;
-import javad3.video.VideoCreator;
-
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,20 +10,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ChartRunnerClustering {
+public class ChartRunnerClusteringLiveStreaming {
 
 	public static void main(String[] args) throws InterruptedException {
 		VisuEngineRenderer renderer = new VisuEngineRenderer("localhost", 8000);
 		
-		ClusteringVideo clusteringVideo = renderer.createClusteringVideo();
+		ClusteringLiveStreaming clusteringLiveStreaming = renderer.createClusteringLiveStreaming();
 		
-		System.out.println("You can find your chart at: " + clusteringVideo.getLocation());
+		System.out.println("You can find your chart at: " + clusteringLiveStreaming.getLocation());
 
-		clusteringVideo.setTitle("Mein Test Titel");
-		clusteringVideo.setHeight(768);
-		clusteringVideo.setWidth(1024);
-		clusteringVideo.setDataRefreshInterval(400);
-		clusteringVideo.setVisibleDatapointsLimit(20);
+		clusteringLiveStreaming.setTitle("Mein Test Titel");
+		clusteringLiveStreaming.setHeight(768);
+		clusteringLiveStreaming.setWidth(1024);
+		clusteringLiveStreaming.setDataRefreshInterval(500);
+		clusteringLiveStreaming.setVisibleDatapointsLimit(20);
 		
 		String datapoints = "C:\\Users\\Laura\\Documents\\Uni\\Bachelorarbeit\\Data\\testData49.csv";
 		String cluster = "C:\\Users\\Laura\\Documents\\Uni\\Bachelorarbeit\\Data\\testCluster49.csv";
@@ -42,43 +40,18 @@ public class ChartRunnerClustering {
         /*
          *  save all datapoints in a long list and save all cluster in a Map with date as key
          */
-        ArrayList<ClusteringData> all_datapoints = new ArrayList<ClusteringData>();
         HashMap<String, ArrayList<ClusteringData>> cluster_map = new HashMap<String, ArrayList<ClusteringData>>();
         
         try {
 
             br_data = new BufferedReader(new FileReader(datapoints));
             br_cluster = new BufferedReader(new FileReader(cluster));
-            
-            /*
-             *  read the datapoints into a list
-             */
-            int count = 0;
-            while ((data_line = br_data.readLine()) != null) {        
-            	count++;
-            	if(count == 1) continue;
 
-            	String[] data = data_line.split(csvSplitBy);
-            	Float X = Float.parseFloat(data[2]);
-            	Float Y = Float.parseFloat(data[3]);
-            	/* 
-            	 * search for the max width to set
-            	 */
-            	if(X>max_width) max_width = X;
-            	if(Y>max_height) max_height = Y;
-            	if(X<min_width) min_width = X;
-            	if(Y<min_height) min_height = Y;
-            	
-                /*
-                 * add the current datapoint to list
-                 */
-                all_datapoints.add(new ClusteringData(X, Y, 0.0f, data[0]));
-            }
             
             /*
              *  read the cluster into a Map
              */
-            count = 0;
+            int count = 0;
             while((cluster_line = br_cluster.readLine()) != null ) {
                 count++;
             	if(count == 1) continue;
@@ -106,11 +79,42 @@ public class ChartRunnerClustering {
 
             }
             
-    		clusteringVideo.setMaxX(Math.round(max_width)+10);
-    		clusteringVideo.setMaxY(Math.round(max_height)+10);
-    		clusteringVideo.setMinX(Math.round(min_width)-10);
-    		clusteringVideo.setMinY(Math.round(min_height)-10);
-            clusteringVideo.addData(all_datapoints, cluster_map);
+            /*
+             *  read the datapoints and directly send them 
+             *  and read the fitting cluster
+             */
+            count = 0;
+            while ((data_line = br_data.readLine()) != null) {        
+            	count++;
+            	if(count == 1) continue;
+
+            	String[] data = data_line.split(csvSplitBy);
+            	Float X = Float.parseFloat(data[2]);
+            	Float Y = Float.parseFloat(data[3]);
+            	/* 
+            	 * search for the max width to set
+            	 */
+            	if(X>max_width) max_width = X;
+            	if(Y>max_height) max_height = Y;
+            	if(X<min_width) min_width = X;
+            	if(Y<min_height) min_height = Y;
+            	
+            	String timeStamp = data[0];
+                /*
+                 * add the current points and cluster to chart
+                 */
+            	
+                ClusteringData currentCluster = new ClusteringData(X, Y, 0.0f, timeStamp);
+                
+        		clusteringLiveStreaming.setMaxX(Math.round(max_width)+10);
+        		clusteringLiveStreaming.setMaxY(Math.round(max_height)+10);
+        		clusteringLiveStreaming.setMinX(Math.round(min_width)-10);
+        		clusteringLiveStreaming.setMinY(Math.round(min_height)-10);
+                clusteringLiveStreaming.addData(currentCluster, cluster_map.get(timeStamp), timeStamp);
+        		Thread.sleep(500);
+
+            }
+            
             
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -125,9 +129,5 @@ public class ChartRunnerClustering {
                 }
             }
         }
-
-		VideoCreator vc = new VideoCreator(clusteringVideo);
-		
-		vc.createVideo();
 	}
 }
