@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Date;
 import java.util.Scanner;
 
 import javax.json.Json;
@@ -153,8 +154,11 @@ public class VisuEngineRenderer implements Renderer {
 
 	boolean sendData(int chartId, String data) {
 		try {
+			Long timeStamp = new Date().getTime();
 			HttpRequest request = createRequestToSendData(chartId, data);
 			HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
+			
+			System.out.println(Long.parseLong(response.headers().firstValue("TimeStamp").get())-timeStamp);
 			
 			return response.statusCode() == 200;
 		} catch (Exception e) {

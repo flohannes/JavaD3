@@ -84,7 +84,7 @@ class ClusteringVideoImpl extends D3ObjectImpl implements ClusteringVideo {
 	public String getLocation() {
 		return this.visuEngineRenderer.getURLForChartIdUnitAndTemplate(this.id, UNIT, TEMPLATE);
 	}
-
+	
 	@Override
 	public void setMaxX(int maxX) {
 		String json = Json.createObjectBuilder().add("maxX", maxX).build().toString();
