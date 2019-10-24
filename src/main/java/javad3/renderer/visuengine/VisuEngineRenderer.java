@@ -158,7 +158,7 @@ public class VisuEngineRenderer implements Renderer {
 			HttpRequest request = createRequestToSendData(chartId, data);
 			HttpResponse<String> response = httpClient.send(request, BodyHandlers.ofString());
 			
-			System.out.println(Long.parseLong(response.headers().firstValue("TimeStamp").get())-timeStamp);
+//			System.out.println(Long.parseLong(response.headers().firstValue("TimeStamp").get())-timeStamp);
 			
 			return response.statusCode() == 200;
 		} catch (Exception e) {

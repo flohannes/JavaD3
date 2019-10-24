@@ -4,3 +4,5 @@
 .settings
 /video/frames/
 /**/*.mp4
+/.apt_generated/
+/.apt_generated_tests/

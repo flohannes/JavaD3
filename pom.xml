@@ -7,12 +7,31 @@
     <packaging>jar</packaging>
     <build>
         <sourceDirectory>src/main/java</sourceDirectory>
+       	<plugins>
+	        <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                    <configuration>
+                        <classpathScope>test</classpathScope>
+                        <mainClass>BenchmarkLoop</mainClass>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>run-selenium</id>
+                            <phase>integration-test</phase>
+                            <goals><goal>java</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
+		</plugins>
     </build>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+    
     <dependencies>
         <dependency>
             <groupId>com.machinepublishers</groupId>
@@ -29,5 +48,16 @@
 		    <artifactId>javax.json</artifactId>
 		    <version>1.1.4</version>
 		</dependency>
+       	<dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-core</artifactId>
+            <version>1.19</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjdk.jmh</groupId>
+            <artifactId>jmh-generator-annprocess</artifactId>
+            <version>1.19</version>
+        </dependency>
     </dependencies>
+ 
 </project>
