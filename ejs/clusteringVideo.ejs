@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript" src="/unit/d3js/libs/d3.v3.min.js"></script>
+  <script type="text/javascript" src="/unit/d3js/libs/jquery.js"></script>
+  <style>
+    body {
+      font-family: Arial;
+      font-size: 12px;
+      text-align: center;
+      background-color: white;
+    }
+
+    .axis path, .axis line {
+      fill: none;
+      stroke: black;
+      stroke-width: 1;
+      shape-rendering: crispEdges;
+    }
+
+    .axisText{
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <div id="chart-container"></div>
+  <button id="start" onclick="start()">Start</button>
+</body>
+<script type="text/javascript">
+
+  var currDataPoint = 0;
+
+  function getVisibleDatapoints(chart) {
+    if (chart.visibleDatapointsLimit) {
+      var begin = currDataPoint - chart.visibleDatapointsLimit < 0 ? 0 : currDataPoint - chart.visibleDatapointsLimit;
+      var end = currDataPoint + 1;
+
+      return chart.data.points.slice(begin, end);
+    }
+
+    return chart.data.points.slice(0, currDataPoint + 1);
+  }
+
+	function getVisibleCluster(chart) {
+		var visible = chart.data.cluster[chart.data.points[currDataPoint].timeStamp];
+		visible = visible.map(function(c) {
+				c.x = Number(c.x);
+				c.y = Number(c.y);
+				c.radius = Number(c.radius);
+				return c;
+		});
+		return visible;
+	}
+
+  var chart = <%- chart %>;
+
+  chart.width = chart.width ? Number(chart.width) : 1024;
+  chart.height = chart.height ? Number(chart.height): 768;
+  chart.dataRefreshInterval = chart.dataRefreshInterval ? Number(chart.dataRefreshInterval) : 1000;
+  chart.visibleDatapointsLimit = chart.visibleDatapointsLimit ? Number(chart.visibleDatapointsLimit) : null;
+
+	// format the points
+  chart.data.points = chart.data.points.map(function(d) {
+	  d.x = Number(d.x);
+		d.y = Number(d.y);
+		d.radius = Number(d.radius);
+    return d;
+  });
+
+  //Set margins and sizes
+  var margin = {
+  top: 60,
+  bottom: 50,
+  right: 30,
+  left: 50
+  };
+
+  var width = Number(chart.width) || 200;
+  var height = Number(chart.height) || 200;
+
+  //Create x and y scale to scale inputs
+  var xScale = d3.scale.linear().domain([chart.minX||0, chart.maxX||0]).range([0, width]);
+  var yScale = d3.scale.linear().domain([chart.maxY||200, chart.minY||200]).range([0, height]);
+
+  //Create x and y axes
+	//Create x and y axes
+	var xAxis = d3.svg.axis()
+			.scale(xScale)
+			.orient("bottom")
+			.ticks(10)
+			.tickSize(2,0);
+
+
+	var yAxis = d3.svg.axis()
+		.scale(yScale)
+		.orient("left")
+		.ticks(5)
+		.tickSize(2,0)
+
+
+	d3.selectAll(".xAxis>.tick")
+    .each(function(d, i){
+      d3.select(this).style("font-size","4px");
+    });
+
+	var data = chart.data.points;
+  var visiblePoints = getVisibleDatapoints(chart);
+	var visibleCluster = getVisibleCluster(chart);
+	var visibleData = visiblePoints.concat(visibleCluster);
+
+  var clusterColor = chart.clusterColor || "#8dd6d1";
+  var pointColor = chart.pointColor || "#c26969";
+
+  //Create an SVG element and append it to the DOM
+  var svg = d3.select("#chart-container")
+    .insert("svg:svg")
+    .attr("id", "chart")
+    .attr({"width": width + margin.left + margin.right, "height": height + margin.top + margin.bottom})
+    .append("svg:g")
+    .attr("transform","translate(" + margin.left + "," + margin.top + ")");
+
+	svg.append("text")
+        .attr("x", (width / 2))
+        .attr("y", 0 - (margin.top / 2))
+        .attr("text-anchor", "middle")
+        .style("font-size", "30px")
+        .text(chart.title);
+
+  svg.append("text")
+      .attr("id", "timeStamp")
+      .attr("x", (width / 2))
+      .attr("y", margin.top-16+height)
+      .attr("text-anchor", "middle")
+      .style("font-size", "20px")
+      .text(visibleData[currDataPoint].timeStamp);
+
+			var path = svg.append('g')
+					.selectAll("circle")
+					.data(visibleData)
+					.enter()
+					.append("circle")
+						.attr("cx", function (d) { return xScale(d.x) } )
+						.attr("cy", function (d) { return yScale(d.y) } )
+						.attr("r", function (d) { return (d.radius>0 ? (xScale(d.radius+d.x)-xScale(d.x)) : xScale(0.2+d.x)-xScale(d.x) )})
+						.style("fill", function(d) {
+						if(d.radius > 0){
+						 return "none";
+						} else{
+							return pointColor;
+						}
+						})
+						.style("stroke", function(d) {
+						if(d.radius > 0){
+						 return clusterColor;
+						} else{
+							return "none";
+						}
+						})
+						.style("stroke-width", 0.5)
+
+    //Add X Axis
+  var x = svg.append("svg:g")
+    .attr("transform", "translate(0," + height + ")")
+    .attr("class", "x axis")
+    .call(xAxis);
+
+  //Add Y Axis
+  var y = svg.append("svg:g")
+    .call(yAxis)
+    .attr("class", "y axis");
+
+  //Add label to Y axis
+  x.append("svg:text")
+    .attr("fill", "#000")
+    .attr("class", "axisText")
+    .attr("text-anchor", "end")
+    .attr("dy", "-0.71em")
+    .attr("x", width)
+    .text(chart.yLabel|| "");
+
+  //Add label to Y axis
+  y.append("svg:text")
+    .attr("fill", "#000")
+    .attr("class", "axisText")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 6)
+    .attr("dy", "0.71em")
+    .attr("text-anchor", "end")
+    .text(chart.yLabel|| "");
+
+  function rerender() {
+
+    currDataPoint++;
+    visiblePoints = getVisibleDatapoints(chart);
+		visibleCluster = getVisibleCluster(chart);
+		visibleData = visiblePoints.concat(visibleCluster);
+    // Select the section we want to apply our changes to
+    // var svg = d3.select("#chart").transition();
+
+			var timeStamp = svg.select("#timeStamp").text(data[currDataPoint].timeStamp);
+			svg.select("g").selectAll("circle").remove();
+
+			var circle = svg.select('g')
+			    .selectAll("circle")
+			    .data(visibleData)
+			    .enter()
+			    .append("circle")
+			      .attr("cx", function (d) { return xScale(d.x) } )
+			      .attr("cy", function (d) { return yScale(d.y) } )
+			      .attr("r", function (d) { return (d.radius>0 ? (xScale(d.radius+d.x)-xScale(d.x)) : xScale(0.2+d.x)-xScale(d.x) )})
+			      .style("fill", function(d) {
+			      if(d.radius > 0){
+			       return "none";
+			      } else{
+			        return pointColor;
+			      }
+			      })
+			      .style("stroke", function(d) {
+			      if(d.radius > 0){
+			       return "#8dd6d1";
+			      } else{
+			        return clusterColor;
+			      }
+			      })
+	          .style("stroke-width", 0.5)
+
+			 if(currDataPoint >= data.length - 1){
+					endTime = Date.now();
+					clearInterval(refreshing);
+					sendStopEvent();
+				}
+  }
+
+  var startTime;
+  var endTime;
+	var refreshing;
+
+  function start() {
+    $("#start").prop("disabled", true);
+    startTime = Date.now();
+		if(chart.dataRefreshInterval){
+			refreshing = window.setInterval(rerender, chart.dataRefreshInterval);
+		}
+  }
+
+  function sendStopEvent() {
+    window.callPhantom({
+      command: 'exit',
+      reason: 'finished animation'
+    })
+  }
+</script>
+</html>

@@ -19,8 +19,8 @@ public class ChartRunnerClusteringLiveStreaming {
 		
 		System.out.println("You can find your chart at: " + clusteringLiveStreaming.getLocation());
 
-		clusteringLiveStreaming.setTitle("Mein Test Titel");
-		clusteringLiveStreaming.setHeight(768);
+		clusteringLiveStreaming.setTitle("Cluster Visualisierung");
+		clusteringLiveStreaming.setHeight(528);
 		clusteringLiveStreaming.setWidth(1024);
 		clusteringLiveStreaming.setDataRefreshInterval(500);
 		clusteringLiveStreaming.setVisibleDatapointsLimit(20);
@@ -87,7 +87,6 @@ public class ChartRunnerClusteringLiveStreaming {
             while ((data_line = br_data.readLine()) != null) {        
             	count++;
             	if(count == 1) continue;
-
             	String[] data = data_line.split(csvSplitBy);
             	Float X = Float.parseFloat(data[2]);
             	Float Y = Float.parseFloat(data[3]);

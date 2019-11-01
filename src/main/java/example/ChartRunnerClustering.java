@@ -21,7 +21,7 @@ public class ChartRunnerClustering {
 		
 		System.out.println("You can find your chart at: " + clusteringVideo.getLocation());
 
-		clusteringVideo.setTitle("Mein Test Titel");
+		clusteringVideo.setTitle("Mein Test Chart");
 		clusteringVideo.setHeight(768);
 		clusteringVideo.setWidth(1024);
 		clusteringVideo.setDataRefreshInterval(400);
