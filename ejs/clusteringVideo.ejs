@@ -48,6 +48,7 @@
 				c.x = Number(c.x);
 				c.y = Number(c.y);
 				c.radius = Number(c.radius);
+        c.timeStamp = chart.data.points[currDataPoint].timeStamp;
 				return c;
 		});
 		return visible;
@@ -64,7 +65,7 @@
   chart.data.points = chart.data.points.map(function(d) {
 	  d.x = Number(d.x);
 		d.y = Number(d.y);
-		d.radius = Number(d.radius);
+		d.radius = 0;
     return d;
   });
 
@@ -177,7 +178,7 @@
     .attr("text-anchor", "end")
     .attr("dy", "-0.71em")
     .attr("x", width)
-    .text(chart.yLabel|| "");
+    .text(chart.xLabel|| "");
 
   //Add label to Y axis
   y.append("svg:text")

@@ -44,3 +44,26 @@ You can find the video under "video/output.mp4".
 3. Implement the <code>addData</code> method in a way that it creates a JSON as your template expects.
 4. Implement the <code>getLocation</code> method. Use the VisuEngineRenderer to retrieve the URL for your unit and template.
 5. Create a method in the VisuEngineRenderer to create an instance of your new template. This is needed, as the VisuEngine assigns an id to a newly created chart that you need to store in your instance.
+
+## How to use Clustering Template
+
+In the EJS Folder the
+
+### What
+
+|parameter 		|meaning   	|
+|---	|---	|
+|title   	|   	|
+|height   	|   	|
+|width   	|   	| 
+|maxX   	|   	| 
+|minX   	|   	| 
+|maxY   	|   	| 
+|minY   	|   	|
+|pointColor   	|   	|
+|clusterColor   	|   	|
+|yLabel   	|   	|    
+|xLabel   	|   	| 
+|dataRefreshInterval   	|   	|
+|visibleDataPointsLimit   	|   	|
+|data   	|   	|   
