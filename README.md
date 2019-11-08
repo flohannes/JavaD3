@@ -45,25 +45,69 @@ You can find the video under "video/output.mp4".
 4. Implement the <code>getLocation</code> method. Use the VisuEngineRenderer to retrieve the URL for your unit and template.
 5. Create a method in the VisuEngineRenderer to create an instance of your new template. This is needed, as the VisuEngine assigns an id to a newly created chart that you need to store in your instance.
 
-## How to use Clustering Template
+## How to use Clustering Templates
 
-In the EJS Folder the
+You can find 3 different interfaces for image generation, livestreaming and video generation for cluster data in the javad3/d3objects directory. You can use those or define your own ones. 
 
-### What
+You can find 3 different ejs files that relate to clustering in the EJS Folder that must be addded to VisuEngine D3 Unit. Each of them can be used to visualize micro-cluster data in different ways.
 
-|parameter 		|meaning   	|
-|---	|---	|
-|title   	|   	|
-|height   	|   	|
-|width   	|   	| 
-|maxX   	|   	| 
-|minX   	|   	| 
-|maxY   	|   	| 
-|minY   	|   	|
-|pointColor   	|   	|
-|clusterColor   	|   	|
-|yLabel   	|   	|    
-|xLabel   	|   	| 
-|dataRefreshInterval   	|   	|
-|visibleDataPointsLimit   	|   	|
-|data   	|   	|   
+### clusteringImage.ejs
+Can be used to generate an image of cluster data. All data that is sent to the VisuEngine server will be visualized in one image of the chart.
+
+### clusteringLiveStreaming.ejs
+Can be used to generate a livestream of cluster data. The VisuEngine server will update the generated chart in a given interval "dataRefreshInterval" and it will take the latest sent datapoints and cluster for visualization. This means the data must be send to VisuEngine in separated packages by time.
+
+### clusteringVideo.ejs
+Can be used to generate a video of cluster data and is possible to use with the VideoGenerator. Important is, that as soon as the VisuEngine server will get a GET request for the video, no more incoming data will be updated and won't be shown in the chart. That means all data that has to be in the generated video, must be at VisuEngine before the rendering starts.
+
+### What parameters to set for cluster visualization
+
+|parameter 		|meaning   							|type 	|
+|---			|---								|---	|
+|title   		|sets a title for the chart					|string |
+|height   		|defines the height in pixel of the chart			|number |
+|width   		|defines the width in pixel of the chart			|number |
+|maxX   		|defines the max number on the x axis				|number |
+|minX   		|defines the min number on the x axis				|number |
+|maxY   		|defines the max number on the y axis				|number |
+|minY   		|defines the min number on the y axis				|number |
+|pointColor   		|sets the datapoints to given color (valid css colors)		|string |
+|clusterColor   	|sets the cluster to given color (valid css colors)		|string |
+|yLabel   		|defines label for y axis					|string |    
+|xLabel   		|defines label for x axis					|string |
+|dataRefreshInterval   	|defines the interval in which the chart will be rerendered	|number |
+|visibleDataPointsLimit |defines how many datapoints will be shown in the chart		|number |
+|data   		|contains the data (datapoints and cluster)			|object | 
+
+### Format of the data parameter
+
+```
+data: {
+    points: [
+       {
+            x: 11.3,
+            y: 23.2, 
+            timeStamp: "t1 Zeitstempel fuer diesen Punkt"
+        },
+        {
+            x: 3.3,
+            y: 53.2, 
+            timeStamp: "t2 Zeitstempel fuer diesen Punkt"
+        }
+    ],
+     cluster: {
+        t1: [
+            {
+                x: 15.3,
+                y: 13.2, 
+                radius: 5.0,
+            },
+            {
+                x: 5.3,
+                y: 43.2, 
+                radius: 2.3,
+            }
+        ]
+    }
+}
+```
