@@ -8,7 +8,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
-    "d3": "^5.9.1",
+    "d3": "^7.6.1",
     "ejs": "^2.6.1",
     "express": "^4.16.4"
   },
